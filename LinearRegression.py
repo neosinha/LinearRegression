@@ -7,18 +7,20 @@ import pandas as pd
 
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import r2_score, mean_squared_error
 
 # Importing the dataset
 dataset = pd.read_csv('data/50_Startups-Data.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
-print("=====")
+
 print(X)
+print(y)
 
 print("=====")
 
 # Encoding categorical data
-ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [3])], remainder='passthrough')
+ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [3,4])], remainder='passthrough')
 
 X = np.array(ct.fit_transform(X))
 print(X)
@@ -32,7 +34,13 @@ from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
 
+print(regressor.coef_)
+
 # Predicting the Test set results
 y_pred = regressor.predict(X_test)
 np.set_printoptions(precision=2)
+print(y_pred)
+
 print(np.concatenate((y_pred.reshape(len(y_pred),1), y_test.reshape(len(y_test),1)),1))
+
+print("R2Score: {}".format(r2_score(y_test, y_pred) ))
