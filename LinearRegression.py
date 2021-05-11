@@ -9,7 +9,8 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
-
+# Splitting the dataset into the Training set and Test set
+from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.metrics import r2_score, mean_squared_error
@@ -21,41 +22,31 @@ print(dataset.describe())
 #X = dataset.iloc[:,3:4 ].values #X variables, data is in col3 and 4
 #y = dataset.iloc[:,5].values #Y var
 
-xdata = dataset['AdSpend'].values
-ydata = dataset['Unit Sales'].values
+ydata = dataset['Unit Sales']
+xdata = dataset[['AdSpend']]
 
-print("XVARS")
-print(xdata)    # prints X data
-print(ydata)     # prints y Data
+print(xdata.head())    # prints X data
+print(ydata.head())     # prints y Data
 
-# Encoding categorical data
-#ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [3,4])], remainder='passthrough')
-#X = np.array(ct.fit_transform(X))
-X = X.reshape(-1,2) # do array size mathching, 1x2 , 2 coz there are 2 variables
-y = y.reshape(-1,2) # do array size matching , 1x2
-print(X)
 
-# Splitting the dataset into the Training set and Test set
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 0)
-scaler = MinMaxScaler()
+#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 0)
+#xscaler = MinMaxScaler()
 
-xdata = xdata.reshape(-1,1)
-ydata = ydata.reshape(-1,1)
+#xdata = xdata.reshape(-1,1)
+#ydata = ydata.reshape(-1,1)
 
-xscaled = scaler.fit_transform(xdata)
-yscaled = scaler.fit_transform(ydata)
+#xscaled = scaler.fit_transform(xdata)
+#yscaled = scaler.fit_transform(ydata)
 
-regressor = LinearRegression() #instnatiate the Linear Regressor class
-#regressor = LogisticRegression()
-#regressor.fit(Xtrain, y_train) #fit the model using the complete data
-regressor.fit(xdata, ydata) #fit the model using the complete data
-#regressor.fit(xscaled, yscaled) #fit the model using the complete data
+regr = LinearRegression(fit_intercept=True, ) #instnatiate the Linear Regressor class
+regr.fit(xdata, ydata) #fit the model using the complete data
 
 
 # Predicting the Test set results
 print("=====")
-print("Reg Score: {}".format(regressor.score(xdata, ydata)))
-print('Coefficients: {}'.format(regressor.coef_)) #print coefficients
-print("Intercept: {}".format(regressor.intercept_)) #print intercept
+print("Reg Score: {}".format(regr.score(xdata, ydata)))
+print("Intercept: {}".format(regr.intercept_)) #print intercept
+print("Coefficients")
+for idx, col in enumerate(xdata.columns):
+    print('\t{}: {}'.format(col, regr.coef_[idx])) #print coefficients
 
