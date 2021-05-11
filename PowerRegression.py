@@ -28,26 +28,7 @@ print("XVARS")
 print(xdata.head())    # prints X data
 print(ydata.head())     # prints y Data
 
-# Encoding categorical data
-#ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [3,4])], remainder='passthrough')
-#X = np.array(ct.fit_transform(X))
-#X = X.reshape(-1, 4)# do array size mathching, 1x2 , 2 coz there are 2 variables
-#y = y.reshape(-1,4) # do array size matching , 1x2
-#print(X)
-
-# Splitting the dataset into the Training set and Test set
-from sklearn.model_selection import train_test_split
-#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 0)
-#xdata = xdata.reshape(-1,4)
-#ydata = ydata.reshape(-1,4)
-
-#xscaled = scaler.fit_transform(xdata)
-#yscaled = scaler.fit_transform(ydata)
-
-#model = sm.OLS(ydata, xdata).fit()
 regressor = LinearRegression(fit_intercept=True) #instnatiate the Linear Regressor class
-#regressor = LogisticRegression()
-#regressor.fit(Xtrain, y_train) #fit the model using the complete data
 regressor.fit(xdata, ydata) #fit the model using the complete data
 #regressor.fit(xscaled, yscaled) #fit the model using the complete data
 #print(model.summary())
