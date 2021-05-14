@@ -21,6 +21,8 @@ print(dataset.describe())
 #X = dataset.iloc[:,3:4 ].values #X variables, data is in col3 and 4
 #y = dataset.iloc[:,5].values #Y var
 print(dataset.columns)
+
+
 ydata = dataset['USAGEW']
 xdata = dataset[['MORNING', 'AFTERNOON', 'EVENING']]
 
@@ -36,9 +38,34 @@ regressor.fit(xdata, ydata) #fit the model using the complete data
 # Predicting the Test set results
 print("=====")
 print("Reg Score: {}".format(regressor.score(xdata, ydata)))
-print('Coefficients: {}'.format(regressor.coef_)) #print coefficients
+print("Intercept: {}".format(regressor.intercept_)) #print intercept
+print('Coefficients==') #print coefficients
+for idx, ctrlpt in enumerate(xdata.columns):
+    beta = "{}".format(regressor.coef_[idx], '000.3f')
+    print("{} : {}".format(ctrlpt, beta ))
+
+
+print(dataset.columns)
+controlpoints = list(dataset.columns[10:])
+print(controlpoints)
+#xdata=dataset[[]]
+xdata=dataset[controlpoints]
+
+print(xdata.head())
+regressor = LinearRegression(fit_intercept=True) #instnatiate the Linear Regressor class
+regressor.fit(xdata, ydata) #fit the model using the complete data
+print("=====")
+print("Reg Score: {}".format(regressor.score(xdata, ydata)))
 print("Intercept: {}".format(regressor.intercept_)) #print intercept
 
+print('Coefficients') #print coefficients
+for idx, ctrlpt in enumerate(controlpoints):
+    beta = "{}".format(regressor.coef_[idx], '000.3f')
+    print("{} : {}".format(ctrlpt, beta ))
+
+
+
+## Algorithm
 print(dataset.columns)
 controlpoints = list(dataset.columns[9:])
 print(controlpoints)
@@ -52,7 +79,7 @@ print("=====")
 print("Reg Score: {}".format(regressor.score(xdata, ydata)))
 print("Intercept: {}".format(regressor.intercept_)) #print intercept
 
-print('Coefficients[{}]: {}'.format(len(regressor.coef_), regressor.coef_)) #print coefficients
+print('Coefficients') #print coefficients
 for idx, ctrlpt in enumerate(controlpoints):
     beta = "{}".format(regressor.coef_[idx], '000.3f')
     print("{} : {}".format(ctrlpt, beta ))
