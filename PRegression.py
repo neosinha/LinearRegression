@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
-import statsmodels.api as sm
 
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
